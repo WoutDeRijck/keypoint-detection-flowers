@@ -47,7 +47,7 @@ class UpSamplingBlock(nn.Module):
             out_channels=n_channels_out,
             kernel_size=kernel_size,
             bias=False,
-            padding="same",
+            padding=1,
         )
         self.norm = nn.BatchNorm2d(n_channels_out)
         self.relu = nn.ReLU()
@@ -66,7 +66,8 @@ class UnetBackbone(Backbone):
     def __init__(self, n_channels_in, n_downsampling_layers, n_resnet_blocks, n_channels, kernel_size, **kwargs):
         super().__init__()
         self.n_channels = n_channels
-        self.conv1 = nn.Conv2d(n_channels_in, n_channels, kernel_size, padding="same")
+        print("test conv1 update")
+        self.conv1 = nn.Conv2d(n_channels_in, n_channels, kernel_size, padding=1)
 
         # create ModuleLists to ensure layers are discoverable by torch (lightning) for e.g. model summary and bringing to cuda.
         # https://pytorch.org/docs/master/generated/torch.nn.ModuleList.html#torch.nn.ModuleList

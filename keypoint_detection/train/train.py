@@ -5,6 +5,8 @@ import pytorch_lightning as pl
 from pytorch_lightning.loggers import WandbLogger
 from pytorch_lightning.trainer.trainer import Trainer
 
+import torch
+
 import wandb
 from keypoint_detection.data.datamodule import RandomSplitDataModule
 from keypoint_detection.data.dataset import KeypointsDataset
@@ -52,7 +54,6 @@ def main(hparams: dict) -> Tuple[KeypointDetector, pl.Trainer]:
     calls trainer.fit(model, module) afterwards and returns both model and trainer.
     """
     pl.seed_everything(hparams["seed"], workers=True)
-
     backbone = BackboneFactory.create_backbone(**hparams)
     loss = LossFactory.create_loss(**hparams)
     model = KeypointDetector(backbone=backbone, loss_function=loss, **hparams)
@@ -68,6 +69,7 @@ def main(hparams: dict) -> Tuple[KeypointDetector, pl.Trainer]:
     )
     trainer = create_pl_trainer(hparams, wandb_logger)
     trainer.fit(model, module)
+    torch.save(model, "/home/nvidia/Documents/KeyPoints/keypoint-detection/flowers/model.pth")
     return model, trainer
 
 

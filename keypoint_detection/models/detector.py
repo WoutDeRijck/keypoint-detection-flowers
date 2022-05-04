@@ -7,11 +7,11 @@ import torch
 import torch.nn as nn
 from torch.optim.lr_scheduler import ReduceLROnPlateau
 
-from keypoint_detection.models.backbones.base_backbone import Backbone
-from keypoint_detection.models.metrics import DetectedKeypoint, Keypoint, KeypointAPMetrics
-from keypoint_detection.utils.heatmap import generate_keypoints_heatmap, get_keypoints_from_heatmap
-from keypoint_detection.utils.tensor_padding import unpad_nans_from_tensor
-from keypoint_detection.utils.visualization import visualize_predictions
+from models.backbones.base_backbone import Backbone
+from models.metrics import DetectedKeypoint, Keypoint, KeypointAPMetrics
+from utils.heatmap import generate_keypoints_heatmap, get_keypoints_from_heatmap
+from utils.tensor_padding import unpad_nans_from_tensor
+from utils.visualization import visualize_predictions
 
 
 class KeypointDetector(pl.LightningModule):
@@ -136,7 +136,7 @@ class KeypointDetector(pl.LightningModule):
             in_channels=backbone.get_n_channels_out(),
             out_channels=self.n_channels_out,
             kernel_size=(3, 3),
-            padding="same",
+            padding=1,
         )
 
         # expect output of backbone to be normalized!
@@ -328,7 +328,7 @@ class KeypointDetector(pl.LightningModule):
         """
         # compute ap's
         ap_metrics = validation_metric.compute()
-        print(f"{ap_metrics=}")
+        print(f"{ap_metrics}")
         for maximal_distance, ap in ap_metrics.items():
             self.log(f"validation/{channel}_ap/d={maximal_distance}", ap)
 
