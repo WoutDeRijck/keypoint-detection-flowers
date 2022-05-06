@@ -66,7 +66,6 @@ class UnetBackbone(Backbone):
     def __init__(self, n_channels_in, n_downsampling_layers, n_resnet_blocks, n_channels, kernel_size, **kwargs):
         super().__init__()
         self.n_channels = n_channels
-        print("test conv1 update")
         self.conv1 = nn.Conv2d(n_channels_in, n_channels, kernel_size, padding=1)
 
         # create ModuleLists to ensure layers are discoverable by torch (lightning) for e.g. model summary and bringing to cuda.

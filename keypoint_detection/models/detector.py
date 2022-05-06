@@ -7,11 +7,11 @@ import torch
 import torch.nn as nn
 from torch.optim.lr_scheduler import ReduceLROnPlateau
 
-from models.backbones.base_backbone import Backbone
-from models.metrics import DetectedKeypoint, Keypoint, KeypointAPMetrics
-from utils.heatmap import generate_keypoints_heatmap, get_keypoints_from_heatmap
-from utils.tensor_padding import unpad_nans_from_tensor
-from utils.visualization import visualize_predictions
+from keypoint_detection.models.backbones.base_backbone import Backbone
+from keypoint_detection.models.metrics import DetectedKeypoint, Keypoint, KeypointAPMetrics
+from keypoint_detection.utils.heatmap import generate_keypoints_heatmap, get_keypoints_from_heatmap
+from keypoint_detection.utils.tensor_padding import unpad_nans_from_tensor
+from keypoint_detection.utils.visualization import visualize_predictions
 
 
 class KeypointDetector(pl.LightningModule):

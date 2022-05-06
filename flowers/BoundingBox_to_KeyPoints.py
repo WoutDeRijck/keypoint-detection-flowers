@@ -6,7 +6,7 @@ This converts bounding box json file to a center keypoint json file
 """
 
 # assign directory
-directory = '/home/nvidia/Documents/KeyPoints/keypoint-detection/flowers/dataset/Dataset55bda906-e605-4ca1-9345-f931af1c27cc'
+directory = '/home/nvidia/Documents/KeyPoints_Wout/keypoint-detection-flowers/flowers/dataset/Dataset55bda906-e605-4ca1-9345-f931af1c27cc'
 
 # Final json file
 dictionary = {"dataset": []}
@@ -24,15 +24,15 @@ for i, filename in enumerate(sorted(os.listdir(directory))):
 
         for index, picture in enumerate(data["captures"]):
             bloemetjes = picture["annotations"][0]["values"]
-            img = Image.open('/home/nvidia/Documents/KeyPoints/keypoint-detection/flowers/dataset/' + picture["filename"])
+            img = Image.open('/home/nvidia/Documents/KeyPoints_Wout/keypoint-detection-flowers/flowers/dataset/' + picture["filename"])
             
             img_x, img_y = img.size
 
             filePath = picture["filename"]
             newFilePath = filePath.replace('RGB03045d16-4f1c-4ae9-ba9f-fa5c1eccc572', 'images')
             # Make new folder with RGB png's
-            # img_rgb = img.convert('RGB')
-            # img_rgb.save('/home/nvidia/Documents/KeyPoints/keypoint-detection/flowers/dataset/dataset/' + newFilePath)
+            img_rgb = img.convert('RGB')
+            img_rgb.save('/home/nvidia/Documents/KeyPoints_Wout/keypoint-detection-flowers/flowers/dataset/dataset/' + newFilePath)
             new_dict = {"image_path" : newFilePath}
             center_keypoints = []
 
@@ -52,5 +52,5 @@ for i, filename in enumerate(sorted(os.listdir(directory))):
 json_object = json.dumps(dictionary, indent = 4)
 
 # Writing to new json dataset
-with open("/home/nvidia/Documents/KeyPoints/keypoint-detection/flowers/dataset/dataset/dataset.json", "w") as outfile:
+with open("/home/nvidia/Documents/KeyPoints_Wout/keypoint-detection-flowers/flowers/dataset/dataset/dataset.json", "w") as outfile:
     outfile.write(json_object)

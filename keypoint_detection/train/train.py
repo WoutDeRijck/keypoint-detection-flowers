@@ -69,7 +69,6 @@ def main(hparams: dict) -> Tuple[KeypointDetector, pl.Trainer]:
     )
     trainer = create_pl_trainer(hparams, wandb_logger)
     trainer.fit(model, module)
-    torch.save(model, "/home/nvidia/Documents/KeyPoints/keypoint-detection/flowers/model.pth")
     return model, trainer
 
 
